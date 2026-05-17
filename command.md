@@ -4,3 +4,11 @@ deactivate
 
 
 pip install python-dotenv
+
+
+
+
+docker compose up
+docker compose down
+
+docker volume ls
