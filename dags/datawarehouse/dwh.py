@@ -62,16 +62,20 @@ def core_table():
         conn, cur = get_conn_cursor()
         
         create_schema(schema)
+        #temp fix to get video_type into the table
+        # cur.execute("DROP TABLE IF EXISTS core.yt_api;")
+        # conn.commit()
         create_table(schema)
         
         table_ids = get_video_ids(cur, schema)
         current_video_ids = set()
         
+        
         cur.execute(f"SELECT * FROM staging.{table};")
         rows = cur.fetchall()
 
         for row in rows:
-            current_video_ids.add(row["video_ID"])
+            current_video_ids.add(row["Video_ID"])
             
             if len(table_ids) == 0:
                 transformed_row = transform_data(row)
@@ -81,7 +85,7 @@ def core_table():
         
                 transformed_row = transform_data(row)
         
-                if transformed_row["video_ID"] in table:
+                if transformed_row["Video_ID"] in table_ids:
                 
                     update_rows(cur, conn, schema, transformed_row)
                     
@@ -93,7 +97,7 @@ def core_table():
         if ids_to_delete:
             delete_rows(cur, conn, schema, ids_to_delete)
             
-        logger.inf(f"{schema} table update completed")
+        logger.info(f"{schema} table update completed")
         
     except Exception as e:
         
