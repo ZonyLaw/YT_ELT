@@ -26,12 +26,16 @@ chmod +x ./docker/postgres/init-multiple-databases.sh
 docker compose down -v
 docker compose up --build
 
+docker compose up -d --force-recreate
+
 
 # airflow
 
 docker exec -it airflow-scheduler bash
 env | grep AIRFLOW_VAR
 airflow varialbes list
+
+docker exec -it airflows-worker bash
 
 
 cd /opt/airflow/logs
@@ -49,3 +53,21 @@ docker exec -it postgres psql -U yt_api_user -d elt_db
 
 ### Getting schema
  \dt core.*
+
+
+
+ # testing
+
+ we build a second version.
+
+docker build -t sl/yt_api_elt:1.0.1 .
+
+## running soda
+
+https://docs.soda.io/soda-documentation/soda-v3/data-source-reference/connect-postgres
+soda test-connection -d pg_datasource -c /opt/airflow/include/soda/configuration.yml -V
+
+
+running the checks
+
+soda scan -d pg_datasource -c /opt/airflow/include/soda/configuration.yml -v SCHEMA-core /opt/airflow/include/soda/checks.yml
