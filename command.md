@@ -38,3 +38,14 @@ cd /opt/airflow/logs
 find . | grep get_playlist_id
 
 cat './dag_id=produce_json/run_id=manual__2026-05-28T21:54:35.165424+00:00/task_id=get_playlist_id/attempt=1.log'
+
+
+## SQL
+
+docker exec -it postgres psql -U yt_api_user -d elt_db
+
+\du
+\l
+
+### Getting schema
+ \dt core.*
