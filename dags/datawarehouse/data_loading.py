@@ -12,7 +12,7 @@ def load_data():
         logger.info(f"Processing file: YT_data_{date.today()}")
         
         with open(file_path, 'r', encoding='utf-8') as raw_data:
-            data = json.laod(raw_data)
+            data = json.load(raw_data)
             
         return data
     except FileNotFoundError:
