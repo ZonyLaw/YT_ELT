@@ -48,6 +48,9 @@ x-airflow-common:
   &airflow-common
   # Use custom image that builds on top of default airflow image (currently; Default: apache/airflow:2.9.2)
   # Image stored on Dockerhub
+  build:
+    context: .
+    dockerfile: Dockerfile
   image: ${DOCKERHUB_NAMESPACE}/${DOCKERHUB_REPOSITORY}:${IMAGE_TAG}
   # Use the .env file to read the connection params and variables - SWITCH THIS OFF WHEN USING GITHUB ACTIONS
   env_file:
@@ -136,7 +139,8 @@ services:
       - ./docker/postgres/init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
     # Test connection to 1 of 3 dbs, the metadata db in this case
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_CONN_USERNAME}", "-d", "${METADATA_DATABASE_NAME}"]
+      # test: ["CMD", "pg_isready", "-U", "${POSTGRES_CONN_USERNAME}", "-d", "${METADATA_DATABASE_NAME}"]
+      test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
       retries: 5
       start_period: 5s
