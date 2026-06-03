@@ -64,10 +64,37 @@ docker build -t sl/yt_api_elt:1.0.1 .
 
 ## running soda
 
+ Soda used for testing the following:
+
+-Missing IDs
+-Duplicate videos
+-Null values
+-Invalid dates
+-Likes > views
+-Row count drops
+
 https://docs.soda.io/soda-documentation/soda-v3/data-source-reference/connect-postgres
 soda test-connection -d pg_datasource -c /opt/airflow/include/soda/configuration.yml -V
 
 
 running the checks
 
-soda scan -d pg_datasource -c /opt/airflow/include/soda/configuration.yml -v SCHEMA-core /opt/airflow/include/soda/checks.yml
+soda scan -d pg_datasource -c /opt/airflow/include/soda/configuration.yml -v SCHEMA=core /opt/airflow/include/soda/checks.yml
+
+soda scan -d pg_datasource \
+-c /opt/airflow/include/soda/configuration.yml \
+-v SCHEMA=staging \
+/opt/airflow/include/soda/checks.yml
+
+
+## pytest
+
+test the following:
+
+-API parsing
+-Transformations
+-Database helper functions
+-Utility functions
+-Error handling
+
+ pytest -v tests/unit_test.py -k test_api_key
