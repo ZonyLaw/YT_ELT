@@ -43,6 +43,10 @@ find . | grep get_playlist_id
 
 cat './dag_id=produce_json/run_id=manual__2026-05-28T21:54:35.165424+00:00/task_id=get_playlist_id/attempt=1.log'
 
+## further airflow command at terminal
+
+airflow dags test produce_json
+
 
 ## SQL
 
