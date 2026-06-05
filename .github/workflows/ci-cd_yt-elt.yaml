@@ -23,6 +23,8 @@ jobs:
           files: |
             Dockerfile
             requirements.txt
+            dags/**
+            include/**
       - name: Set up Docker Buildx
         if: steps.changed-files-build.outputs.any_changed == 'true'
         uses: docker/setup-buildx-action@v3
