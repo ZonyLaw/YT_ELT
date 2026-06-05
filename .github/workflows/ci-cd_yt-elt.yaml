@@ -80,7 +80,7 @@ jobs:
         uses: tj-actions/changed-files@45
         with:
           files: |
-            dags/*
+            dags/**
             include/**
             docker-compose.yaml
       - name: Set up Docker compose
